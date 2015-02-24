@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150223172816) do
+ActiveRecord::Schema.define(version: 20150224040739) do
 
   create_table "creators", force: :cascade do |t|
     t.string   "username"
@@ -30,6 +30,13 @@ ActiveRecord::Schema.define(version: 20150223172816) do
   end
 
   add_index "places", ["creator_id"], name: "index_places_on_creator_id"
+
+  create_table "places_tags", id: false, force: :cascade do |t|
+    t.integer "place_id"
+    t.integer "tag_id"
+  end
+
+  add_index "places_tags", ["place_id", "tag_id"], name: "index_places_tags_on_place_id_and_tag_id"
 
   create_table "positions", force: :cascade do |t|
     t.float    "longitude"
