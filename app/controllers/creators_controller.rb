@@ -1,11 +1,17 @@
 class CreatorsController < ApplicationController
   respond_to :json
   before_action :api_key
+  before_action :offset_params, only: [:index]
   
   def index
-    creators = Creator.limit(@limit).offset(@offset)
+    creators = Creator.limit(@limit).offset(@offset).includes(:places)
     render json: creators, status: :ok
   end
+  
+  def show
+    @creator = Creator.find_by_id(params[:id])
+    respond_with @creator, location: creators_path(@creator)
+  rescue ActiveRecord::RecordNotFound
 
   def create
     creator = Creator.new(creator_params)

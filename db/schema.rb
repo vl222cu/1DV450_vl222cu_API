@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150224040739) do
+ActiveRecord::Schema.define(version: 20150227051328) do
 
   create_table "creators", force: :cascade do |t|
     t.string   "username"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20150224040739) do
     t.text     "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float    "longitude"
+    t.float    "latitude"
   end
 
   add_index "places", ["creator_id"], name: "index_places_on_creator_id"
@@ -37,13 +39,6 @@ ActiveRecord::Schema.define(version: 20150224040739) do
   end
 
   add_index "places_tags", ["place_id", "tag_id"], name: "index_places_tags_on_place_id_and_tag_id"
-
-  create_table "positions", force: :cascade do |t|
-    t.float    "longitude"
-    t.float    "latitude"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "tags", force: :cascade do |t|
     t.string   "name"
