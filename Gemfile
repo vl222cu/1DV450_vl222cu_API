@@ -36,6 +36,9 @@ gem 'bootstrap-sass', '~> 3.3.3'
 
 gem 'jwt'
 
+# Check locations
+gem 'geocoder'
+
 # Email validation
 gem 'validates_email_format_of'
 
