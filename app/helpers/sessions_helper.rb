@@ -12,8 +12,8 @@ module SessionsHelper
     end
   end
 
-  def encodeJWT(storyteller, exp=2.hours.from_now)
-    payload = {storyteller_id: storyteller.id}
+  def encodeJWT(creator, exp=2.hours.from_now)
+    payload = {creator_id: creator.id}
     payload[:exp] = exp.to_i
 
     JWT.encode(payload, Rails.application.secrets.secret_key_base, 'HS512')
