@@ -1,4 +1,6 @@
-Rails.application.routes.draw do
+Rails.application.routes.draw do  
+  scope '/api' do
+    scope 'v1' do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -13,7 +15,9 @@ Rails.application.routes.draw do
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-  resources :places, :tags, :creators
+      resources :places, :tags, :creators
+      
+      post '/auth', to: 'sessions#api_auth'
 
   # Example resource route with options:
   #   resources :products do
@@ -54,4 +58,6 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+    end
+  end
 end
