@@ -1,9 +1,11 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :exception
+  # protect_from_forgery with: :exception  
   
   include SessionsHelper
+  
+  rescue_from ActionController::UnknownFormat, with: :raise_bad_format
   
   # default parameters
   OFFSET = 0
@@ -32,4 +34,8 @@ class ApplicationController < ActionController::Base
     return true
   end
   
+  # Error handler for bad format
+  def raise_bad_format
+    render json: { error: "The API does not support the requested format" }, status: :bad_request
+  end
 end

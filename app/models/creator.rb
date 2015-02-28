@@ -14,7 +14,8 @@ class Creator < ActiveRecord::Base
       methods: [:self_ref, :place_ref]
       }.update(options)
     super(options)
-    
+  end
+  
   private
   
   def self_ref

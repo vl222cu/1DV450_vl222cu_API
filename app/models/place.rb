@@ -12,9 +12,9 @@ class Place < ActiveRecord::Base
   def serializable_hash (options={})
     options = {
       only: [:id, :name, :text, :longitude, :latitude],
-      include: [creators: {only: [:username, :email]}, tags: {only: [:name]}]
+      include: [creators: {only: [:username, :email]}, tags: {only: [:name]}],
       methods: [:self_ref, :creator_ref]
-      }.update(options)    
+      }.update(options)     
     super(options)
   end
   
