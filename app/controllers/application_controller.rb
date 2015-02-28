@@ -23,15 +23,11 @@ class ApplicationController < ActionController::Base
     @limit  ||= LIMIT
   end
   
-  # check if api_key is included in header
+  # Check if api_key is included in header
   def api_key
-    api_key = request.headers['X-ApiKey']
-      #Check if api_key exists
-    if api_key.nil?
-      render json: {error: 'No Key'}, status: :bad_request
-      return false
+    authenticate_or_request_with_http_token do |token, options|
+    ApiKey.exists?(access_token: token)  
     end
-    return true
   end
   
   # Error handler for bad format
