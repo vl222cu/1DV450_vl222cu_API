@@ -7,7 +7,11 @@ class CreatorsController < ApplicationController
   # GET all creators
   def index
     creators = Creator.limit(@limit).offset(@offset).includes(:places)
-    respond_with creators, status: :ok, location: creators_path
+    if creators.present?
+      respond_with creators, status: :ok, location: creators_path
+    else
+      render json: {error: 'Could not find any resources at all.'}, status: :not_found
+    end
   end
   
   # GET a specific creator
@@ -29,7 +33,7 @@ class CreatorsController < ApplicationController
       render json: {error: 'Could not create the resource. Check if you are using the required parameters.'}, status: :unprocessable_entity
     end
   end
-
+  
   private
 
   def creator_params
