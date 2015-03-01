@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150228144851) do
+ActiveRecord::Schema.define(version: 20150301055012) do
 
   create_table "api_keys", force: :cascade do |t|
     t.string   "access_token"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20150228144851) do
     t.datetime "updated_at", null: false
     t.float    "longitude"
     t.float    "latitude"
+    t.string   "address"
   end
 
   add_index "places", ["creator_id"], name: "index_places_on_creator_id"

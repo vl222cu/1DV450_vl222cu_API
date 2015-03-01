@@ -1,24 +1,21 @@
 class Place < ActiveRecord::Base
   belongs_to :creator
   has_and_belongs_to_many :tags
-  
   # Given a place with known laititude/longitude coordinates
   reverse_geocoded_by :latitude, :longitude
-  after_validation :reverce_geocode
+  after_validation :reverse_geocode
  
   validates :name, presence: true
   validates :text, presence: true
   
   def serializable_hash (options={})
     options = {
-      only: [:id, :name, :text, :longitude, :latitude],
-      include: [creators: {only: [:username, :email]}, tags: {only: [:name]}],
-      methods: [:self_ref, :creator_ref]
+      only: [:id, :name, :text, :longitude, :latitude, :address],
+      include: [:tags],
+      #methods: [:self_ref, :creator_ref]
       }.update(options)     
     super(options)
   end
-  
-  private
   
   def self_ref
     { :link => "#{Rails.configuration.baseurl}#{place_path(self)}" }
