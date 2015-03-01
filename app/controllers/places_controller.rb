@@ -1,20 +1,29 @@
 class PlacesController < ApplicationController
   respond_to :json
-  #before_action :api_key
-  #before_action :api_authenticate, only: [:create, :update, :destroy]
+  before_action :api_key
+  before_action :api_authenticate, only: [:create, :update, :destroy]
   before_action :offset_params, only: [:index, :nearby]
   before_action :fetch_place, only: [:show, :update, :destroy]
   
-  # GET all places
+  # GET all places depending on routes
   def index
-    places = Place.limit(@limit).offset(@offset).latest
+    if params[:creator_id].present?
+      @creator = Creator.find_by_id(params[:creator_id])
+      places = @creator.places.limit(@limit).offset(@offset).latest
+    else if params[:tag_id].present?
+      @tag = Tag.find_by_id(params[:tag_id])
+      places = @tag.places.limit(@limit).offset(@offset).latest
+    else
+      places = Place.limit(@limit).offset(@offset).latest
+    end
+  end
     if places.present?
       respond_with places, status: :ok, location: places_path
     else
       render json: {error: 'Could not find any resources at all.'}, status: :not_found
     end
   end
-  
+    
   # GET a specific place
   def show
     if @place.present?

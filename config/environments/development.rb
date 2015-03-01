@@ -37,7 +37,7 @@ Rails.application.configure do
   config.assets.raise_runtime_errors = true
 
   # Nitrous base url
-  config.baseurl = "http://fierce-fireball-96-185708.euw1-2.nitrousbox.com:3000"
+  config.baseurl = "http://fierce-fireball-96-185708.euw1-2.nitrousbox.com"
   
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true

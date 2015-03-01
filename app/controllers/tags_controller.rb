@@ -1,7 +1,7 @@
 class TagsController < ApplicationController
   respond_to :json
-  #before_action :api_key
-  #before_action :api_authenticate, only: [:create, :destroy]
+  before_action :api_key
+  before_action :api_authenticate, only: [:create, :destroy]
   before_action :offset_params, only: [:index]
   before_action :fetch_tag, only: [:show, :destroy]
   

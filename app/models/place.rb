@@ -16,17 +16,12 @@ class Place < ActiveRecord::Base
     options = {
       only: [:id, :name, :text, :longitude, :latitude, :address],
       include: [:tags],
-      #methods: [:self_ref, :creator_ref]
+      methods: [:self_ref]
       }.update(options)     
     super(options)
   end
   
   def self_ref
-    { :link => "#{Rails.configuration.baseurl}#{place_path(self)}" }
-  end
-  
-  def creator_ref
-    { :link => "#{Rails.configuration.baseurl}#{creator_path(self.creator)}" }
-  end
-  
+    { :link => "#{Rails.configuration.baseurl}#{Rails.application.routes.url_helpers.place_path(self)}" }
+  end  
 end
