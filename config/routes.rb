@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     scope 'v1' do    
       
       post '/auth', to: 'sessions#api_auth'
-      
+      get 'places/nearby', to: 'places#nearby'
       resources :tags do
         resources :places
       end

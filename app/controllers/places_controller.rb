@@ -32,7 +32,7 @@ class PlacesController < ApplicationController
   # Geocoder is used to look up places near a specific spot
   def nearby
     if params[:latitude].present? && params[:longitude].present?
-      places = Place.near([params[:latitude].to_f, params[:longitude].to_f], 50, :order => :distance, units: :km).limit(@limit).offset(@offset)
+      places = Place.near([params[:latitude].to_f, params[:longitude].to_f], 50, units: :km).limit(@limit).offset(@offset)
       if places.present?
         respond_with places, status: :ok, location: places_path
       else
