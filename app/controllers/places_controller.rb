@@ -5,32 +5,26 @@ class PlacesController < ApplicationController
   before_action :offset_params, only: [:index, :nearby]
   before_action :fetch_place, only: [:show, :update, :destroy]
   
+  rescue_from ActiveRecord::RecordNotFound, with: :raise_not_found
+  
   # GET all places depending on routes
   def index
     if params[:creator_id].present?
-      @creator = Creator.find_by_id(params[:creator_id])
+      @creator = Creator.find(params[:creator_id])
       places = @creator.places.limit(@limit).offset(@offset).latest
-    else if params[:tag_id].present?
-      @tag = Tag.find_by_id(params[:tag_id])
-      places = @tag.places.limit(@limit).offset(@offset).latest
-    else
-      places = Place.limit(@limit).offset(@offset).latest
-    end
-  end
-    if places.present?
-      respond_with places, status: :ok, location: places_path
-    else
-      render json: {error: 'Could not find any resources at all.'}, status: :not_found
+      else if params[:tag_id].present?
+        @tag = Tag.find(params[:tag_id])
+        places = @tag.places.limit(@limit).offset(@offset).latest
+      else
+        places = Place.limit(@limit).offset(@offset).latest
+      end
+    respond_with places, status: :ok, location: places_path
     end
   end
     
   # GET a specific place
   def show
-    if @place.present?
-      respond_with @place, status: :ok, location: places_path(@place)
-    else
-      render json: {error: 'Could not find the resource. Check if you are using the right place_id.'}, status: :not_found
-    end
+    respond_with @place, status: :ok, location: places_path(@place)
   end
   
   # POST a place
@@ -66,9 +60,9 @@ class PlacesController < ApplicationController
     if params[:latitude].present? && params[:longitude].present?
       places = Place.near([params[:latitude].to_f, params[:longitude].to_f], 50, units: :km).limit(@limit).offset(@offset)
       if places.present?
-        respond_with places, status: :ok, location: places_path
+      respond_with places, status: :ok, location: places_path
       else
-        render json: {error: 'Could not find any resources nearby stated location.'}, status: :not_found
+      render json: {error: 'Could not find any resources nearby stated location.'}, status: :not_found
       end
     else
       render json: {error: 'Could not find any resources. Check if you are using the required parameters.'}, status: :bad_request
@@ -78,10 +72,15 @@ class PlacesController < ApplicationController
   private
     
   def fetch_place
-    @place = Place.find_by_id(params[:id])
+    @place = Place.find(params[:id])
   end
   
   def place_params
     params.require(:place).permit(:creator_id, :name, :text, :longitude, :latitude, tags_attributes: [:name] )
   end  
+
+  def raise_not_found
+    render json: {error: 'Could not find anya resources at all. Check if you are using the required parameters.'}, status: :not_found
+  end
+  
 end
