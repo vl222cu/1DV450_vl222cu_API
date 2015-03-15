@@ -1,6 +1,7 @@
 class Place < ActiveRecord::Base
   belongs_to :creator
   has_and_belongs_to_many :tags
+  accepts_nested_attributes_for :tags
   
   # Given a place with known laititude/longitude coordinates
   reverse_geocoded_by :latitude, :longitude
@@ -16,12 +17,21 @@ class Place < ActiveRecord::Base
     options = {
       only: [:id, :name, :text, :longitude, :latitude, :address],
       include: [:tags],
-      methods: [:self_ref]
+      methods: [:self_ref, :creator_ref]
       }.update(options)     
     super(options)
   end
   
   def self_ref
     { :link => "#{Rails.configuration.baseurl}#{Rails.application.routes.url_helpers.place_path(self)}" }
-  end  
+  end 
+
+def creator_ref
+  creator = self.creator
+  { 
+    :username => creator.username,
+    :creatorid => creator.id,
+    :link => "#{Rails.configuration.baseurl}#{Rails.application.routes.url_helpers.creator_path(creator)}" 
+  }
+  end
 end
