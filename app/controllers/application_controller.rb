@@ -22,11 +22,15 @@ class ApplicationController < ActionController::Base
     @offset ||= OFFSET
     @limit  ||= LIMIT
   end
-  
+ 
   # Check if api_key is included in header
   def api_key
-    authenticate_or_request_with_http_token do |token, options|
-    ApiKey.exists?(access_token: token)  
+    api_key = request.headers['X-ApiKey']
+    if api_key.present?
+      return true
+    else
+      render json: {error: 'A valid api-key is missing in the header in order to access requested data.'}, status: :unauthorized
+      return false
     end
   end
   

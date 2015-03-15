@@ -5,10 +5,10 @@ module SessionsHelper
 
       @token_payload = decodeJWT auth_header.strip
       if !@token_payload
-        render json: {error: "The provided token wasn't correct."}, status: :bad_request
+        render json: {error: "The provided token wasn't correct."}, status: :forbidden
       end
     else
-      render json: {error: 'Need to include the Authorization header.'}, status: :forbidden
+      render json: {error: 'Need to include the Authorization header.'}, status: :unauthorized
     end
   end
 

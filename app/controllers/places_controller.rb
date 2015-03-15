@@ -12,13 +12,15 @@ class PlacesController < ApplicationController
     if params[:creator_id].present?
       @creator = Creator.find(params[:creator_id])
       places = @creator.places.limit(@limit).offset(@offset).latest
-      else if params[:tag_id].present?
-        @tag = Tag.find(params[:tag_id])
-        places = @tag.places.limit(@limit).offset(@offset).latest
-      else
-        places = Place.limit(@limit).offset(@offset).latest
-      end
-    respond_with places, status: :ok, location: places_path
+    else if params[:tag_id].present?
+      @tag = Tag.find(params[:tag_id])
+      places = @tag.places.limit(@limit).offset(@offset).latest
+    else
+      places = Place.limit(@limit).offset(@offset).latest
+    end
+  end
+    if places.present?
+      respond_with places, status: :ok, location: places_path
     end
   end
     
