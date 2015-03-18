@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
  
   # Check if api_key is included in header
   def api_key
-    api_key = request.headers['X-ApiKey']
+    api_key = request.headers['apiKey']
     if api_key.present?
       return true
     else

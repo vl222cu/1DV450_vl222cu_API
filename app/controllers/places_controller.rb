@@ -82,7 +82,7 @@ class PlacesController < ApplicationController
   end  
 
   def raise_not_found
-    render json: {error: 'Could not find anya resources at all. Check if you are using the required parameters.'}, status: :not_found
+    render json: {error: 'Could not find any resources at all. Check if you are using the required parameters.'}, status: :not_found
   end
   
 end
