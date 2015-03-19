@@ -20,7 +20,7 @@ class PlacesController < ApplicationController
     end
   end
     if places.present?
-      respond_with places, status: :ok, location: places_path
+      respond_with places, status: :ok
     end
   end
     
@@ -31,7 +31,7 @@ class PlacesController < ApplicationController
   
   # POST a place
   def create
-    place = Place.new(place_params)
+    place = Place.new(place_params)    
     if place.save
       respond_with place, status: :created
     else

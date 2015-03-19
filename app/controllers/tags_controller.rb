@@ -25,7 +25,7 @@ class TagsController < ApplicationController
   end
   
   # POST a tag
-  def create
+ def create
     tag = Tag.new(tag_params)
     if tag.save
       respond_with tag, status: :created
