@@ -1,7 +1,7 @@
 class PlacesController < ApplicationController
   respond_to :json
   before_action :api_key
-  before_action :api_authenticate, only: [:create, :update, :destroy]
+  #before_action :api_authenticate, only: [:create, :update, :destroy]
   before_action :offset_params, only: [:index, :nearby]
   before_action :fetch_place, only: [:show, :update, :destroy]
   
@@ -31,7 +31,7 @@ class PlacesController < ApplicationController
   
   # POST a place
   def create
-    place = Place.new(place_params)    
+    place = Place.new(place_params) 
     if place.save
       respond_with place, status: :created
     else
@@ -78,7 +78,7 @@ class PlacesController < ApplicationController
   end
   
   def place_params
-    params.require(:place).permit(:creator_id, :name, :text, :longitude, :latitude, tags_attributes: [:name] )
+    params.require(:place).permit(:creator_id, :name, :text, :address, tags_attributes: [:name] )
   end  
 
   def raise_not_found

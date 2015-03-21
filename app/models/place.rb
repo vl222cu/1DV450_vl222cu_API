@@ -4,8 +4,10 @@ class Place < ActiveRecord::Base
   accepts_nested_attributes_for :tags, reject_if: :existing_tag
   
   # Given a place with known laititude/longitude coordinates
-  reverse_geocoded_by :latitude, :longitude
-  after_validation :reverse_geocode
+  #reverse_geocoded_by :latitude, :longitude
+  #after_validation :reverse_geocode
+  geocoded_by :address
+  after_validation :geocode, if: :address_changed?
  
   validates :name, presence: true
   validates :text, presence: true
