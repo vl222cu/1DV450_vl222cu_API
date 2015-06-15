@@ -20,7 +20,7 @@ tag5 = Tag.create(name: "Best big city!")
 
 Place.delete_all
 Place.create(creator_id: creator1.id, name: "San Fran", text: "The Golden Gate Bridge is amazing!", latitude: 37.774929, longitude: -122.419415, tags: [tag5])
-Place.create(creator_id: creator2.id, name: "Empire State Building", text: "Must visit when you are in NYC!", latitude: 40.74844, longitude: -73.985664, tags: [tag1, tag2])
-Place.create(creator_id: creator3.id, name: "Gili T", text: "The most beautiful island in Indonesia, must-see place!", latitude: -8.409517, longitude: 115.188916, tags: [tag4])
-Place.create(creator_id: creator4.id, name: "Kreta", text: "Such a cosy get away for couples!", latitude: 35.240117, longitude: 24.809269, tags: [tag3])
+Place.create(creator_id: creator2.id, name: "Empire State Building", text: "Must visit when you are in NYC!", latitude: 40.74844, longitude: -73.985664, tags: [tag1, tag2, tag5])
+Place.create(creator_id: creator3.id, name: "Gili T", text: "The most beautiful island in Indonesia, must-see place!", latitude: -8.409517, longitude: 115.188916, tags: [tag3, tag4])
+Place.create(creator_id: creator4.id, name: "Kreta", text: "Such a cosy get away for couples!", latitude: 35.240117, longitude: 24.809269, tags: [tag2, tag3, tag4])
 

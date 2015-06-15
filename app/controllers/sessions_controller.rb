@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
    def api_auth  
      creator = Creator.find_by(email: params[:email].downcase)
      if creator && creator.authenticate(params[:password])
-       render json: { auth_token: encodeJWT(creator) }
+       render json: { auth_token: encodeJWT(creator), creator: creator }
       else
         render json: { error: 'Invalid username or password' }, status: :unauthorized
       end

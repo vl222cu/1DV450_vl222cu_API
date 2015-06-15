@@ -25,11 +25,9 @@ module SessionsHelper
     if payload[0]['exp'] >= Time.now.to_i
       payload
     else
-      puts 'Time fucked up'
       false
     end
     rescue => error
-      puts error
       nil
   end
 end

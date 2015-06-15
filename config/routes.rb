@@ -4,7 +4,7 @@ Rails.application.routes.draw do
       
       post '/auth'        , to: 'sessions#api_auth'
       get '/places/nearby', to: 'places#nearby'
-      
+
       resources :creators do
         resources :places
       end

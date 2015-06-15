@@ -35,12 +35,11 @@ class Place < ActiveRecord::Base
     { :link => "#{Rails.configuration.baseurl}#{Rails.application.routes.url_helpers.place_path(self)}" }
   end 
 
-def creator_ref
-  creator = self.creator
-  { 
-    :username => creator.username,
-    :creatorid => creator.id,
-    :link => "#{Rails.configuration.baseurl}#{Rails.application.routes.url_helpers.creator_path(creator)}" 
-  }
+  def creator_ref
+    creator = self.creator
+    { 
+      :username => creator.username,
+      :creatorid => creator.id,
+      :link => "#{Rails.configuration.baseurl}#{Rails.application.routes.url_helpers.creator_path(creator)}" }
   end
 end

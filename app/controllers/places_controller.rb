@@ -1,7 +1,7 @@
 class PlacesController < ApplicationController
   respond_to :json
   before_action :api_key
-  #before_action :api_authenticate, only: [:create, :update, :destroy]
+  before_action :api_authenticate, only: [:create, :update, :destroy]
   before_action :offset_params, only: [:index, :nearby]
   before_action :fetch_place, only: [:show, :update, :destroy]
   
@@ -21,6 +21,8 @@ class PlacesController < ApplicationController
   end
     if places.present?
       respond_with places, status: :ok
+    else
+      render json: {error: 'Could not find any resources at all. Check if you are using the required parameters.'}, status: :not_found
     end
   end
     
@@ -31,7 +33,7 @@ class PlacesController < ApplicationController
   
   # POST a place
   def create
-    place = Place.new(place_params) 
+    place = Place.new(place_params)
     if place.save
       respond_with place, status: :created
     else
